@@ -27,3 +27,29 @@ def mostrar_estado(palabra_secreta, letras_adivinadas, letras_incorrectas, inten
     print("Palabra: " + palabra_mostrada)
     print("Letras incorrectas: " + ", ".join(letras_incorrectas))
     print("Intentos restantes: " + str(intentos_restantes))
+
+    while intentos > 0:
+        letra = input("Ingresa una letra: ").lower()
+
+        if len(letra) != 1 or not letra.isalpha():
+            print("Por favor, ingresa una sola letra válida.")
+            continue
+
+        if letra in letras_adivinadas:
+            print("Ya adivinaste esa letra.")
+        elif letra in palabra_secreta:
+            letras_adivinadas.append(letra)
+            print("¡Correcto! Letras adivinadas:", " ".join(letras_adivinadas))
+        else:
+            intentos -= 1
+            print("Incorrecto. Te quedan", intentos, "intentos.")
+
+        palabra_oculta = mostrar_palabra(palabra_secreta, letras_adivinadas)
+        print(palabra_oculta)
+
+        if palabra_oculta == palabra_secreta:
+            print("¡Felicidades! Has adivinado la palabra:", palabra_secreta)
+            break
+
+    if intentos == 0:
+        print("Has perdido. La palabra era:", palabra_secreta)
